@@ -1,0 +1,19 @@
+[submodule "thirdparty/imnodes"]
+	path = thirdparty/imnodes
+	url = git@github.com:YINGHAIDADA/imnodes.git
+[submodule "thirdparty/imgui"]
+	path = thirdparty/imgui
+	url = https://github.com/YINGHAIDADA/imgui
+	branch = docking
+[submodule "thirdparty/rapidjson"]
+	path = thirdparty/rapidjson
+	url = https://github.com/YINGHAIDADA/rapidjson.git
+[submodule "thirdparty/glfw"]
+	path = thirdparty/glfw
+	url = https://github.com/YINGHAIDADA/glfw.git
+[submodule "thirdparty/glm"]
+	path = thirdparty/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "thirdparty/spdlog"]
+	path = thirdparty/spdlog
+	url = https://github.com/gabime/spdlog.git

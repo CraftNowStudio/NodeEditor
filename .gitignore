@@ -1,32 +1,54 @@
-# Prerequisites
-*.d
+# Binaries
+**/bin/
+**/bin-int/
+Intermediates/
+**/Binaries/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.history/
 
-# Precompiled Headers
-*.gch
+# Visual Studio files and folder
+.vscode/
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj**
+
+# Visual Studio build outputs
+*.suo
+*.vspscc
+*.vssscc
+*.user
+*.aps
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# OS generated
+.DS_Store
+Thumbs.db
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
+# C/C++ generated
 *.a
+*.ax
+*.d
+*.dll
 *.lib
+*.lo
+*.o
+*.os
+*.ox
+*.Plo
+*.so
 
-# Executables
-*.exe
-*.out
-*.app
+# Binutils tmp linker output of the form "stXXXXXX" where "X" is alphanumeric
+st[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]
+
+# Python generated
+__pycache__/
+*.pyc
+
+# Documentation
+doc/_build/
