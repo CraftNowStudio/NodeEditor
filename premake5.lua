@@ -30,5 +30,5 @@ group ""
 group ""
 
 group "Core"
-	include "NodeEditor.lua"
+	include "NodeEditor"
 group ""
