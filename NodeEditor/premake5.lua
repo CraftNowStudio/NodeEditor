@@ -7,8 +7,8 @@ project "NodeEditor"
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
-	-- pchheader "cnpch.h"
-	-- pchsource "src/cnpch.cpp"
+	pchheader "core/nepch.h"
+	pchsource "core/nepch.cpp"
 
 	files
 	{
@@ -41,6 +41,8 @@ project "NodeEditor"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.imnodes}",
 		"%{IncludeDir.rapidjson}",
+
+		"%{IncludeDir.VulkanSDK}",
 	}
 
 	links
@@ -57,6 +59,9 @@ project "NodeEditor"
 		"_CRT_SECURE_NO_WARNINGS",
 		"GLFW_INCLUDE_NONE",
 	}
+
+	filter "files:../thirdparty/imnodes/**.cpp"
+		flags { "NoPCH" }
 
 	filter "system:windows"
 		systemversion "latest"
@@ -81,7 +86,9 @@ project "NodeEditor"
 		
 		links
 		{
-
+			"%{Library.ShaderC_Debug}",
+			"%{Library.SPIRV_Cross_Debug}",
+			"%{Library.SPIRV_Cross_GLSL_Debug}"
 		}
 
 	filter "configurations:Release"
@@ -91,4 +98,7 @@ project "NodeEditor"
 		
 		links
 		{
+			"%{Library.ShaderC_Release}",
+			"%{Library.SPIRV_Cross_Release}",
+			"%{Library.SPIRV_Cross_GLSL_Release}"
 		}

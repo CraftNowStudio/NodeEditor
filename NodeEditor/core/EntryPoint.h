@@ -1,6 +1,6 @@
 #pragma once
-#include "Core.h"
-#include "Instrumentor.h"
+#include "core/Core.h"
+#include "debug/Instrumentor.h"
 #include "Application.h"
 
 #ifdef NE_PLATFORM_WINDOWS

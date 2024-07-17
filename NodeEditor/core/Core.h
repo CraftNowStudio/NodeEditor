@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PlatformDetection.h"
+#include "core/PlatformDetection.h"
 
 #include <memory>
 
@@ -48,5 +48,5 @@ namespace NodeEditor {
 	}
 }
 
-#include "Log.h"
-#include "Assert.h"
+#include "core/Log.h"
+#include "core/Assert.h"

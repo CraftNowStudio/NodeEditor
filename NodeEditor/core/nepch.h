@@ -21,9 +21,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Core.h"
+#include "core/Core.h"
 
-#include "Log.h"
+#include "core/Log.h"
 
 #include "debug/Instrumentor.h"
 

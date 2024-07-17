@@ -9,7 +9,7 @@ premake.api.register {
 
 premake.override(premake.vstudio.sln2005, "projects", function(base, wks)
 	if wks.solution_items and #wks.solution_items > 0 then
-		local solution_folder_GUID = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" -- See https://www.codeproject.com/Reference/720512/List-of-Visual-Studio-Project-Type-GUIDs
+		local solution_folder_GUID = "{924C8D43-7E04-CF90-E70B-A8ECD3E26981}" -- See https://www.codeproject.com/Reference/720512/List-of-Visual-Studio-Project-Type-GUIDs
 		premake.push("Project(\"" .. solution_folder_GUID .. "\") = \"Solution Items\", \"Solution Items\", \"{" .. os.uuid("Solution Items:" .. wks.name) .. "}\"")
 		premake.push("ProjectSection(SolutionItems) = preProject")
 
