@@ -1,7 +1,7 @@
 ﻿include "./vendor/premake/premake_customization/solution_items.lua"
 include "Dependencies.lua"
 
-workspace "NodeEditor"
+workspace "NodeEditorWS"
 	architecture "x86_64"
 	startproject "NodeEditor"
 
