@@ -12,30 +12,13 @@ project "NodeEditor"
 
 	files
 	{
-		"main/**.h",
 		"main/**.cpp",
-        "core/**.h",
 		"core/**.cpp",
-        "drivers/**.h",
 		"drivers/**.cpp",
-        "platform/**.h",
 		"platform/**.cpp",
 		"%{wks.location}/thirdparty/glm/glm/**.hpp",
 		"%{wks.location}/thirdparty/glm/glm/**.inl",
-        "%{wks.location}/thirdparty/imnodes/imnodes.h",
         "%{wks.location}/thirdparty/imnodes/imnodes.cpp",
-        "%{wks.location}/thirdparty/imnodes/imnodes_internal.h",
-        "%{wks.location}/thirdparty/rapidjson/include/**.h",
-
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_sdl2.h",
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_sdl2.cpp",
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_glfw.h",
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_glfw.cpp",
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_vulkan.h",
-		-- "%{wks.location}/thirdparty/imgui/backends/imgui_impl_vulkan.cpp",
-		-- "%{wks.location}/thirdparty/imgui/misc/cpp/imgui_stdlib.cpp",
-
-		
 		-- "thirdparty/stb_image/**.h",
 		-- "thirdparty/stb_image/**.cpp",
 		
