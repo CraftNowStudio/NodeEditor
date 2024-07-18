@@ -10,6 +10,8 @@ IncludeDir["glm"] = "%{wks.location}/thirdparty/glm"
 IncludeDir["imnodes"] = "%{wks.location}/thirdparty/imnodes"
 IncludeDir["rapidjson"] = "%{wks.location}/thirdparty/rapidjson/include"
 
+IncludeDir["SDL2"] = "%{wks.location}/thirdparty/SDL2/include"
+
 IncludeDir["shaderc"] = "%{VULKAN_SDK}/Include/shaderc/include"
 IncludeDir["SPIRV_Cross"] = "%{VULKAN_SDK}/Include/spirv_cross"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
@@ -17,8 +19,13 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
+LibraryDir["SDL2Dir"] = "%{wks.location}/thirdparty/SDL2/lib"
 
 Library = {}
+
+Library["SDL2"] = "%{LibraryDir.SDL2Dir}/x64/SDL2.lib"
+Library["SDL2main"] = "%{LibraryDir.SDL2Dir}/x64/SDL2main.lib"
+
 
 Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
 Library["VulkanUtils"] = "%{LibraryDir.VulkanSDK}/VkLayer_utils.lib"
