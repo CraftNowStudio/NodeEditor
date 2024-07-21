@@ -32,8 +32,8 @@
 #endif
 
 
-#include"ImNode_Base.h"
-#include"ImNode_BaseNodes.h"
+#include"core/ui/imnodes/ImNode_Base.h"
+#include"core/ui/imnodes/ImNode_BaseNodes.hpp"
 
 static void glfw_error_callback(int error, const char* description)
 {

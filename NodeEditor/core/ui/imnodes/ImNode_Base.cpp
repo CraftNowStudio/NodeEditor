@@ -15,7 +15,7 @@ namespace NodeEditor
 
 
 	NodeManager::NodeManager() {
-			maxNodeId = -1;
+			maxNodeId = -1;				// 起始id序号
 			maxInputAttrId = 4999;
 			maxOutputAttrId = 9999;
 	}
@@ -51,9 +51,10 @@ namespace NodeEditor
 		int start_attr, end_attr;
 		if (ImNodes::IsLinkCreated(&start_attr, &end_attr))		//每次必然只能创建一个链接，并且该函数可以保证不重复
 		{
-			// 检查这次创建是否有效【避免多输出对应一个输入的情况】
+			// 检查这次创建是否有效
 			bool vaild = true;
-			std::vector<std::pair<int, int>>::iterator it = links.begin();
+			// 避免多输出对应一个输入的情况
+			auto it = links.begin();
 			while (it != links.end()) {
 				if (it->second == end_attr) {
 					vaild = false;
@@ -69,7 +70,7 @@ namespace NodeEditor
 		int attrid;
 		if (ImNodes::IsLinkDestroyed(&attrid))
 		{
-			std::vector<std::pair<int, int>>::iterator it = links.begin();
+			auto it = links.begin();
 			while (it != links.end()) {
 				if (it->second == attrid) {
 					links.erase(it);
