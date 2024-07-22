@@ -6,28 +6,21 @@
 #include "imgui_glfw_opengl3.h"
 #include <core/Application.h>
 
-class Sandbox : public NodeEditor::Application
-{
+class Sandbox : public NodeEditor::Application {
 public:
-	Sandbox(const NodeEditor::ApplicationSpecification& spec)
-		: Application(spec)
-	{
+	Sandbox(const NodeEditor::ApplicationSpecification &spec) :
+			Application(spec) {
 		//TODO:不添加任何层，imgui会出现渲染残影错误
 		//PushLayer(new ExampleLayer());
 		//PushLayer(new Sandbox2D());
 	}
-	~Sandbox()
-	{
-
+	~Sandbox() {
 	}
 
 private:
-
 };
 
-NodeEditor::Application* NodeEditor::CreateApplication(NodeEditor::ApplicationCommandLineArgs args)
-{
-
+NodeEditor::Application *NodeEditor::CreateApplication(NodeEditor::ApplicationCommandLineArgs args) {
 	NodeEditor::ApplicationSpecification spec;
 	spec.Name = "NodeEditor";
 	spec.CommandLineArgs = args;
