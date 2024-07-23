@@ -1,11 +1,9 @@
-#pragma once
-
 #include "core/nepch.h"
-#include"ImNode_Base.h"
-#include <any>
-#include"ImNode_BaseAttrs.hpp"
 
-namespace NodeEditor
-{
-    std::vector<Attr *> Attr::attrList;
+#include "ImNode_BaseAttrs.hpp"
+#include "ImNode_Base.h"
+#include <any>
+
+namespace NodeEditor {
+std::vector<Attr *> Attr::attrList;
 }
