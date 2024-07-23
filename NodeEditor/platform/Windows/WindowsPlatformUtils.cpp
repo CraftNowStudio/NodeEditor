@@ -1,5 +1,5 @@
-#include "core/Application.h"
 #include "core/nepch.h"
+#include "core/Application.h"
 #include "utils/PlatformUtils.h"
 
 #include <GLFW/glfw3.h>

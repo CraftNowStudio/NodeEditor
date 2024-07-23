@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/nepch.h"
 #include"ImNode_Base.h"
 #include <any>
 

@@ -1,5 +1,5 @@
-#include "core/Input.h"
 #include "core/nepch.h"
+#include "core/Input.h"
 
 #include "core/Application.h"
 #include <GLFW/glfw3.h>

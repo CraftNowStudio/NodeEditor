@@ -14,8 +14,10 @@ project "NodeEditor"
 	{
 		"main/**.cpp",
 		"core/**.cpp",
+		"debug/**.cpp",
 		"drivers/**.cpp",
 		"platform/**.cpp",
+		"utils/**.cpp",
 		"%{wks.location}/thirdparty/glm/glm/**.hpp",
 		"%{wks.location}/thirdparty/glm/glm/**.inl",
         "%{wks.location}/thirdparty/imnodes/imnodes.cpp",

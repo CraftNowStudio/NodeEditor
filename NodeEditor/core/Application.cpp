@@ -1,5 +1,5 @@
-#include "core/Application.h"
 #include "core/nepch.h"
+#include "core/Application.h"
 
 #include "core/Input.h"
 #include "utils/PlatformUtils.h"

@@ -1,5 +1,5 @@
-#include "core/Window.h"
 #include "core/nepch.h"
+#include "core/Window.h"
 
 #ifdef NE_PLATFORM_WINDOWS
 #include "platform/Windows/WindowsWindow.h"
