@@ -1,41 +1,157 @@
 #pragma once
 #include <vector>
+#include <string>
+#include "imNode_BaseAttrs.hpp"
 
 namespace NodeEditor
 {
-	template<class valueType = int>
-	class Attr {
+	class Node {
 	public:
-		Attr(int fId, int Id) :fartherNodeId(fId), attrId(Id) {};
-		~Attr() {};
-		int get_Id() { return attrId; }
-		int get_fId() { return fartherNodeId; }
-	private:
-		int fartherNodeId;
-		int attrId;
-		valueType value;
+		Node(const char * title) {
+			id=nodeManager.get_NextNodeId();
+			set_title(title);
+		}
+		~Node() {};
+		int get_id() { return id; };
+		void set_title(const char * title){this->title = title;};
+		void render() {
+			ImNodes::BeginNode(id);
+			
+			// render title
+			ImNodes::BeginNodeTitleBar();
+			ImGui::TextUnformatted(title);
+			ImNodes::EndNodeTitleBar();
+
+			// render attr
+			for(auto it = inputAttrList.begin(); it<inputAttrList.end(); it++){
+				(*it)->render();
+			}
+			for(auto it = outputAttrList.begin(); it<outputAttrList.end(); it++){
+				(*it)->render();
+			}
+
+
+			ImNodes::EndNode();
+		};
+		virtual void forward() = 0;
+
+	protected:
+		int id;
+		const char * title;
+
+		std::vector<Attr *> inputAttrList;
+		std::vector<Attr *> outputAttrList;
+		void push_inputAttr(Attr * inAttr) {inputAttrList.push_back(inAttr);};
+		void push_outputAttr(Attr * outAttr){outputAttrList.push_back(outAttr);};
+		void pop_inputAttr() {inputAttrList.pop_back();};
+		void pop_outputAttr() {outputAttrList.pop_back();};
 	};
 
-	class SimpleNode {
+	
+    template<class valueType = float>
+	class OutNode: public Node{
 	public:
-		SimpleNode();
-		~SimpleNode();
-		void Begin();
-		void End();
-		void addInputAttr(const char* inText);
-		void addOutputAttr(const char* outText);
-		void setTitle(const char* Title);
-		int getId() { return nodeId; }
-		void add_sonNode(int nId) { sonIdList.push_back(nId); }
-		void del_sonNode(int nId);
-		auto get_sonNode() { return sonIdList; }
+		OutAttr<valueType> * outAttr;
+		OutNode(VarType varType): Node("output") 
+		{
+			outAttr = new OutAttr<valueType>((valueType)0.f, "output", varType);
+			push_outputAttr(outAttr);
+		};
+		~OutNode() {delete outAttr;};
+		void forward(){
+		};
+		// void add_sonNode(int nId) { sonIdList.push_back(nId); }
+		// void del_sonNode(int nId);
+		// auto get_sonNode() { return sonIdList; }
 	private:
-		int nodeId;
-		std::vector<int> inputAttrId;
-		std::vector<int> outputAttrId;		// 该节点包含的输出属性
-		int _inAttrIdx;
-		int _outAttrIdx;					// 显示实时的渲染顺序
-		std::vector<int> sonIdList;			// 该节点输出属性链接的下游节点
+		// std::vector<int> sonIdList;			//
 	};
-	void ShowINDemo();
+
+    template<class valueType = float>
+	class AddNode: public Node{
+	public:
+		InAttr<valueType> * in1;
+		InAttr<valueType> * in2;
+		OutAttr<valueType> * out1;
+		AddNode(VarType varType): Node("add") 
+		{
+			in1 = new InAttr<valueType>((valueType)0.f, "a ", varType);
+			in2 = new InAttr<valueType>((valueType)0.f, "b ", varType);
+			out1 = new OutAttr<valueType>((valueType)0.f, "c ", varType);
+			push_inputAttr(in1);
+			push_inputAttr(in2);
+			push_outputAttr(out1);
+		};
+		~AddNode() {
+			delete in1;
+			delete in2;
+			delete out1;
+		};
+		void forward(){
+			
+			valueType sum=0;
+			// render attr
+			for(auto it = inputAttrList.begin(); it<inputAttrList.end(); it++){
+				sum += *(valueType *)((*it)->get());
+			}
+			for(auto it = outputAttrList.begin(); it<outputAttrList.end(); it++){
+				(*it)->set((std::any*)(&sum), in1->varType);
+			}
+		};
+		// void add_sonNode(int nId) { sonIdList.push_back(nId); }
+		// void del_sonNode(int nId);
+		// auto get_sonNode() { return sonIdList; }
+	private:
+		// std::vector<int> sonIdList;			//
+	};
+
+	class Demo{
+		public:
+			OutNode<float> * n0;
+			AddNode<float> * n1;
+			AddNode<float> * n2;
+			AddNode<float> * n3;
+			OutNode<float> * n4;
+			Demo(){
+				n0 = new OutNode<float>(NE_FLOAT);
+				n1 = new AddNode<float>(NE_FLOAT);
+				n2 = new AddNode<float>(NE_FLOAT);
+				n3 = new AddNode<float>(NE_FLOAT);
+				n4 = new OutNode<float>(NE_FLOAT);
+			}
+			~Demo(){
+				delete n0;
+				delete n1;
+				delete n2;
+				delete n3;
+				delete n4;
+			}
+
+			void render(){
+				ImGui::Begin("simple node editor");
+				ImNodes::BeginNodeEditor();
+
+				n0->forward();
+				n1->forward();
+				n2->forward();
+				n3->forward();
+				n4->forward();
+				n0->render();
+				n1->render();
+				n2->render();
+				n3->render();
+				n4->render();
+
+				nodeManager.draw_Links();
+
+				// MiniMap is a square region with a side length that is 20% the largest editor canvas dimension
+				// See ImNodesMiniMapLocation_ for other corner locations
+				ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
+				ImNodes::EndNodeEditor();
+				nodeManager.add_Links();
+				nodeManager.del_Links();
+				ImGui::End();
+			}
+	};
+	static Demo demo;
 }

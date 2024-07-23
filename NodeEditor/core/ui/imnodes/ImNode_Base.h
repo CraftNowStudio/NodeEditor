@@ -22,9 +22,7 @@ namespace NodeEditor
 		void del_Links();
 
 	private:
-		int maxNodeId;
-		int maxInputAttrId;
-		int maxOutputAttrId;
+		int maxId;
 		std::vector<int> nodeIdList;
 		std::vector<int> inputAttrIdList;
 		std::vector<int> outputAttrIdList;

@@ -149,7 +149,7 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        NodeEditor::ShowINDemo();
+        NodeEditor::demo.render();
 
 
         // Rendering

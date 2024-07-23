@@ -1,6 +1,7 @@
 #pragma once
 #include "core/nepch.h"
 #include"ImNode_Base.h"
+#include"ImNode_BaseAttrs.hpp"
 
 
 namespace NodeEditor
@@ -15,27 +16,25 @@ namespace NodeEditor
 
 
 	NodeManager::NodeManager() {
-			maxNodeId = -1;				// 起始id序号
-			maxInputAttrId = 4999;
-			maxOutputAttrId = 9999;
+			maxId = -1;
 	}
 	NodeManager::~NodeManager() {
 
 	}
 	int NodeManager::get_NextInputAttrId() {
-		maxInputAttrId++;
-		inputAttrIdList.push_back(maxInputAttrId);
-		return maxInputAttrId;
+		maxId++;
+		inputAttrIdList.push_back(maxId);
+		return maxId;
 	}
 	int NodeManager::get_NextOutputAttrId() {
-		maxOutputAttrId++;
-		outputAttrIdList.push_back(maxOutputAttrId);
-		return maxOutputAttrId;
+		maxId++;
+		outputAttrIdList.push_back(maxId);
+		return maxId;
 	}
 	int NodeManager::get_NextNodeId() {
-		maxNodeId++;
-		nodeIdList.push_back(maxNodeId);
-		return maxNodeId;
+		maxId++;
+		nodeIdList.push_back(maxId);
+		return maxId;
 	}
 	void NodeManager::draw_Links() {
 		for (int i = 0; i < links.size(); ++i)
@@ -44,29 +43,33 @@ namespace NodeEditor
 			// in this case, we just use the array index of the link
 			// as the unique identifier
 			ImNodes::Link(i, p.first, p.second);
+			Attr::Link(p.second, p.first);
 		}
 	}
 	void NodeManager::add_Links() {
-		// 检测链接创建行为，并保存，放在ImNodes::EndNodeEditor();后面
+		// put it after `ImNodes::EndNodeEditor()`;
 		int start_attr, end_attr;
-		if (ImNodes::IsLinkCreated(&start_attr, &end_attr))		//每次必然只能创建一个链接，并且该函数可以保证不重复
+		if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
 		{
-			// 检查这次创建是否有效
 			bool vaild = true;
-			// 避免多输出对应一个输入的情况
-			auto it = links.begin();
-			while (it != links.end()) {
-				if (it->second == end_attr) {
-					vaild = false;
-					break;
+			if(Attr::getById(start_attr)->varType!=Attr::getById(end_attr)->varType){
+				vaild = false;					// attrs with different varType is not allowed
+			}else{
+				auto it = links.begin();
+				while (it != links.end()) {		// multi-input link to one output is not allowed
+					if (it->second == end_attr) {
+						vaild = false;
+						break;
+					}
+					it++;
 				}
-				it++;
 			}
 			if(vaild)links.push_back(std::make_pair(start_attr, end_attr));
 		}
 	}
 	void NodeManager::del_Links() {
-		// 检测链接删除行为，并保存，放在ImNodes::EndNodeEditor();后面
+		// put it after `ImNodes::EndNodeEditor()`;
+		// 杩樻病瀹屾垚
 		int attrid;
 		if (ImNodes::IsLinkDestroyed(&attrid))
 		{
