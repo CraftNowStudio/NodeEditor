@@ -1,14 +1,13 @@
 #pragma once
+#include "Application.h"
 #include "core/Core.h"
 #include "debug/Instrumentor.h"
-#include "Application.h"
 
 #ifdef NE_PLATFORM_WINDOWS
 
-extern NodeEditor::Application* NodeEditor::CreateApplication(ApplicationCommandLineArgs args);
+extern NodeEditor::Application *NodeEditor::CreateApplication(ApplicationCommandLineArgs args);
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
 	NodeEditor::Log::Init();
 	NE_CORE_WARN("Initialized Log!");
 	NE_INFO("Hello!");
