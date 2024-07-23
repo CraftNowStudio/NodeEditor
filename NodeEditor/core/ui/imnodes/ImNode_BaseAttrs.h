@@ -2,6 +2,7 @@
 
 #include "ImNode_Base.h"
 #include <any>
+#include <vector>
 
 namespace NodeEditor {
 enum AttrType { INPUT_ATTR,
@@ -14,52 +15,19 @@ enum VarType { NE_INT,
 
 class Attr {
 public:
-	Attr(AttrType attrType, VarType varType) :
-			attrType(attrType), varType(varType) {
-		if (attrType == INPUT_ATTR) {
-			id = nodeManager.get_NextInputAttrId();
-		} else {
-			id = nodeManager.get_NextOutputAttrId();
-		}
-		attrList.push_back(this);
-	};
+	Attr(AttrType attrType, VarType varType);
+	~Attr();
 
-	~Attr() {
-		for (auto it = attrList.begin(); it < attrList.end(); it++) {
-			if (this == *it) {
-				attrList.erase(it);
-			}
-		}
-	};
+	int get_id();
 
-	int get_id() { return id; }
-
-	static Attr *getById(int id) {
-		for (auto it = attrList.begin(); it < attrList.end(); it++) {
-			if (id == (*it)->id) {
-				return *it;
-			}
-		}
-		return nullptr;
-	};
+	static Attr *getById(int id) ;
 
 	virtual void render() = 0;
 	virtual std::any *get() = 0;
 	virtual bool set(std::any *v, VarType varType, bool force = false) = 0;
 	virtual void init() = 0; //重置value
 
-	static bool Link(int id0, int id1) {
-		// 将id0赋值到id1
-		Attr *a = getById(id0);
-		Attr *b = getById(id1);
-		if (a == nullptr || b == nullptr) {
-			return false;
-		} else {
-			if (a->set(b->get(), b->varType))
-				return true;
-			return false;
-		}
-	}
+	static bool Link(int id0, int id1);
 
 	VarType varType;
 	static std::vector<Attr *> attrList;
@@ -85,7 +53,7 @@ public:
 	void render() {
 		ImNodes::BeginInputAttribute(id);
 		ImGui::Text(text);
-		ImGui::PushItemWidth(100.0f);
+		ImGui::PushItemWidth(60.0f);
 		ImNodes::EndInputAttribute();
 	};
 	std::any *get() {
@@ -121,8 +89,13 @@ public:
 	~OutAttr(){};
 	void render() {
 		ImNodes::BeginOutputAttribute(id);
-		ImGui::Indent(100.f - ImGui::CalcTextSize(text).x);
-		ImGui::DragFloat(text, &this->value, 0.01f);
+		ImGui::PushItemWidth(60.0f);
+		ImGui::Indent(60.f - ImGui::CalcTextSize(text).x);
+		if (varType == NE_FLOAT || varType == NE_DOUBLE) {
+			ImGui::DragFloat(text, (float *) &this->value, 0.f);
+		} else if (varType == NE_INT) {
+			ImGui::DragInt(text, (int *) &this->value, 0);
+		}
 		ImNodes::EndOutputAttribute();
 	};
 	std::any *get() {

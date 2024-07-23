@@ -1,5 +1,5 @@
 #pragma once
-#include "imNode_BaseAttrs.hpp"
+#include "imNode_BaseAttrs.h"
 #include <string>
 #include <vector>
 
@@ -100,18 +100,56 @@ private:
 	// std::vector<int> sonIdList;			//
 };
 
+
+template <class valueType = float>
+class MulNode : public Node {
+public:
+	InAttr<valueType> *in1;
+	InAttr<valueType> *in2;
+	OutAttr<valueType> *out1;
+	MulNode(VarType varType) :
+			Node("multiply") {
+		in1 = new InAttr<valueType>((valueType)0.f, "a ", varType);
+		in2 = new InAttr<valueType>((valueType)0.f, "b ", varType);
+		out1 = new OutAttr<valueType>((valueType)0.f, "c ", varType);
+		push_inputAttr(in1);
+		push_inputAttr(in2);
+		push_outputAttr(out1);
+	};
+	~MulNode() {
+		delete in1;
+		delete in2;
+		delete out1;
+	};
+	void forward() {
+		valueType res = 1;
+		// render attr
+		for (auto it = inputAttrList.begin(); it < inputAttrList.end(); it++) {
+			res *= *(valueType *)((*it)->get());
+		}
+		for (auto it = outputAttrList.begin(); it < outputAttrList.end(); it++) {
+			(*it)->set((std::any *)(&res), in1->varType);
+		}
+	};
+	// void add_sonNode(int nId) { sonIdList.push_back(nId); }
+	// void del_sonNode(int nId);
+	// auto get_sonNode() { return sonIdList; }
+private:
+	// std::vector<int> sonIdList;			//
+};
+
 class Demo {
 public:
 	OutNode<float> *n0;
 	AddNode<float> *n1;
-	AddNode<float> *n2;
-	AddNode<float> *n3;
+	AddNode<int> *n2;
+	MulNode<float> *n3;
 	OutNode<float> *n4;
 	Demo() {
 		n0 = new OutNode<float>(NE_FLOAT);
 		n1 = new AddNode<float>(NE_FLOAT);
-		n2 = new AddNode<float>(NE_FLOAT);
-		n3 = new AddNode<float>(NE_FLOAT);
+		n2 = new AddNode<int>(NE_INT);
+		n3 = new MulNode<float>(NE_FLOAT);
 		n4 = new OutNode<float>(NE_FLOAT);
 	}
 	~Demo() {

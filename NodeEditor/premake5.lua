@@ -14,6 +14,7 @@ project "NodeEditor"
 	{
 		"main/**.cpp",
 		"core/**.cpp",
+		"core/**.h",
 		"debug/**.cpp",
 		"drivers/**.cpp",
 		"platform/**.cpp",

@@ -1,6 +1,6 @@
 #include "core/nepch.h"
 #include "ImNode_Base.h"
-#include "ImNode_BaseAttrs.hpp"
+#include "ImNode_BaseAttrs.h"
 
 namespace NodeEditor {
 void IN_Initialize() {
