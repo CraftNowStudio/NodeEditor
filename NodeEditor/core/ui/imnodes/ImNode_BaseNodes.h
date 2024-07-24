@@ -37,10 +37,10 @@ protected:
 	int id;
 	const char *title;
 
-	std::vector<Attr *> inputAttrList;
-	std::vector<Attr *> outputAttrList;
-	void push_inputAttr(Attr *inAttr) { inputAttrList.push_back(inAttr); };
-	void push_outputAttr(Attr *outAttr) { outputAttrList.push_back(outAttr); };
+	std::vector<InAttr *> inputAttrList;
+	std::vector<OutAttr *> outputAttrList;
+	void push_inputAttr(InAttr *inAttr) { inputAttrList.push_back(inAttr); };
+	void push_outputAttr(OutAttr *outAttr) { outputAttrList.push_back(outAttr); };
 	void pop_inputAttr() { inputAttrList.pop_back(); };
 	void pop_outputAttr() { outputAttrList.pop_back(); };
 };

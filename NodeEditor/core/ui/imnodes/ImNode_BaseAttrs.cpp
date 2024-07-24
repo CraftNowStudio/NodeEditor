@@ -1,15 +1,16 @@
 #include "core/nepch.h"
 
+#include <any>
+
 #include "ImNode_BaseAttrs.h"
 #include "ImNode_Base.h"
-#include <any>
 
 namespace NodeEditor {
     
 std::vector<Attr *> Attr::attrList;
 
-Attr::Attr(AttrType attrType, VarType varType) :
-        attrType(attrType), varType(varType) {
+Attr::Attr(AttrType attrType, VarType varType, std::any value) :
+        attrType(attrType), varType(varType), value(value) {
     if (attrType == INPUT_ATTR) {
         id = nodeManager.get_NextInputAttrId();
     } else {

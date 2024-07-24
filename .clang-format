@@ -83,13 +83,15 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: true
 # IfMacros:
 #   - KJ_IF_MAYBE
 # IncludeBlocks:   Preserve
-IncludeCategories:
-  - Regex:           '".*"'
-    Priority:        1
-  - Regex:           '^<.*\.h>'
-    Priority:        2
-  - Regex:           '^<.*'
-    Priority:        3
+# IncludeCategories:
+#   - Regex:           '^"*pch.h"'
+#     Priority:        1
+#   - Regex:           '^<.*\.h>'
+#     Priority:        2
+#   - Regex:           '^<.*\/.*\.h>'
+#     Priority:        3
+#   - Regex:           '"*.h"'
+#     Priority:        4
 # IncludeIsMainRegex: '(Test)?$'
 # IncludeIsMainSourceRegex: ''
 # IndentAccessModifiers: false

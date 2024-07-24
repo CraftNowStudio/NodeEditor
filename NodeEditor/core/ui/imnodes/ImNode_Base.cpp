@@ -36,7 +36,6 @@ void NodeManager::draw_Links() {
 		// in this case, we just use the array index of the link
 		// as the unique identifier
 		ImNodes::Link(i, p.first, p.second);
-		Attr::Link(p.second, p.first);
 	}
 }
 void NodeManager::add_Links() {
@@ -56,8 +55,11 @@ void NodeManager::add_Links() {
 				it++;
 			}
 		}
-		if (vaild)
+		if (vaild) {
 			links.push_back(std::make_pair(start_attr, end_attr));
+			//TODO: 实现数据指向
+
+		}
 	}
 }
 void NodeManager::del_Links() {

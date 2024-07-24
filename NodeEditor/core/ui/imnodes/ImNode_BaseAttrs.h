@@ -15,7 +15,7 @@ enum VarType { NE_INT,
 
 class Attr {
 public:
-	Attr(AttrType attrType, VarType varType);
+	Attr(AttrType attrType, VarType varType, std::any value);
 	~Attr();
 
 	int get_id();
@@ -23,41 +23,36 @@ public:
 	static Attr *getById(int id) ;
 
 	virtual void render() = 0;
-	virtual std::any *get() = 0;
+	virtual std::any& get() { return value;};
 	virtual bool set(std::any *v, VarType varType, bool force = false) = 0;
 	virtual void init() = 0; //重置value
+	const VarType &getType() { return varType; }
 
 	static bool Link(int id0, int id1);
 
-	VarType varType;
 	static std::vector<Attr *> attrList;
-
 protected:
 	//一个数据可以被多个attr共用
 	int id;
 	AttrType attrType;
-
-private:
+	VarType varType;
+	std::any value;
 };
 // std::vector<Attr *> Attr::attrList;
 
-template <class valueType = float>
+
 class InAttr : public Attr {
 public:
-	InAttr(valueType value, const char *text, VarType varType = NE_FLOAT) :
-			Attr(INPUT_ATTR, varType) {
-		this->text = text;
-		this->value = value;
+	InAttr(std::any value, const char *text, VarType varType = NE_FLOAT) :
+			Attr(INPUT_ATTR, varType, value) {
+		this->name = text;
 	};
 	~InAttr(){};
 	void render() {
 		ImNodes::BeginInputAttribute(id);
-		ImGui::Text(text);
+		ImGui::Text(name);
 		ImGui::PushItemWidth(60.0f);
 		ImNodes::EndInputAttribute();
-	};
-	std::any *get() {
-		return (std::any *)&value;
 	};
 	bool set(std::any *v, VarType varType, bool force = false) {
 		if (varType != this->varType) {
@@ -66,7 +61,7 @@ public:
 			}
 			return false;
 		}
-		this->value = *(valueType *)v;
+		this->value = *(std::any *)v;
 		return true;
 	};
 	void init() {
@@ -74,8 +69,7 @@ public:
 	}
 
 private:
-	const char *text;
-	valueType value;
+	const char *name;
 };
 
 template <class valueType = float>
@@ -98,9 +92,6 @@ public:
 		}
 		ImNodes::EndOutputAttribute();
 	};
-	std::any *get() {
-		return (std::any *)&value;
-	};
 	bool set(std::any *v, VarType varType, bool force = false) {
 		if (varType != this->varType) {
 			if (force) {
@@ -117,6 +108,6 @@ public:
 
 private:
 	const char *text;
-	valueType value;
+	std::vector<InAttr *> next;
 };
 } //namespace NodeEditor

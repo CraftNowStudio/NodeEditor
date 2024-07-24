@@ -7,6 +7,11 @@ namespace NodeEditor {
 void IN_Initialize();
 void IN_Destroy();
 
+struct NodeIndexInfo {
+	int nodeId;
+	int pointId;
+};
+
 class NodeManager {
 public:
 	NodeManager();
@@ -17,6 +22,7 @@ public:
 	void draw_Links();
 	void add_Links();
 	void del_Links();
+	void forword();
 
 private:
 	int maxId;
