@@ -1,6 +1,7 @@
 #include "core/nepch.h"
 #include "ImNode_Base.h"
 #include "ImNode_BaseAttrs.h"
+#include "ImNode_BaseNodes.h"
 
 namespace NodeEditor {
 void IN_Initialize() {
@@ -30,7 +31,7 @@ int NodeManager::get_NextNodeId() {
 	nodeIdList.push_back(maxId);
 	return maxId;
 }
-void NodeManager::draw_Links() {
+void NodeManager::render_links() {
 	for (int i = 0; i < links.size(); ++i) {
 		const std::pair<int, int> p = links[i];
 		// in this case, we just use the array index of the link
@@ -43,7 +44,7 @@ void NodeManager::add_Links() {
 	int start_attr, end_attr;
 	if (ImNodes::IsLinkCreated(&start_attr, &end_attr)) {
 		bool vaild = true;
-		if (Attr::getById(start_attr)->varType != Attr::getById(end_attr)->varType) {
+		if (Attr::getById(start_attr)->getType() != Attr::getById(end_attr)->getType()) {
 			vaild = false; // attrs with different varType is not allowed
 		} else {
 			auto it = links.begin();
@@ -58,7 +59,10 @@ void NodeManager::add_Links() {
 		if (vaild) {
 			links.push_back(std::make_pair(start_attr, end_attr));
 			//TODO: 实现数据指向
-
+			OutAttr * oa = (OutAttr *)Attr::getById(start_attr);
+			InAttr * ia = (InAttr *)Attr::getById(end_attr);
+			oa->pushNext(ia);
+			oa->link();
 		}
 	}
 }
@@ -77,5 +81,24 @@ void NodeManager::del_Links() {
 		}
 	}
 }
+
+void NodeManager::forward() {
+	for(auto it=nodeIdList.begin(); it<nodeIdList.end(); it++){
+		Node::allNodeMap.find(*it)->second->forward();
+	}
+}
+
+void NodeManager::render(){
+	// forward之后再调用render
+	for(auto it=nodeIdList.begin(); it<nodeIdList.end(); it++){
+		Node::allNodeMap.find(*it)->second->render();
+	}
+}
+
+const std::vector<int> * NodeManager::get_nodeIdList() {
+	return &nodeIdList;
+}
+
+NodeManager nodeManager;
 
 } //namespace NodeEditor

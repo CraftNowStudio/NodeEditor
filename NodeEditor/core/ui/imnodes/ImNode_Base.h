@@ -19,10 +19,13 @@ public:
 	int get_NextNodeId();
 	int get_NextInputAttrId();
 	int get_NextOutputAttrId();
-	void draw_Links();
+	void render_links();
 	void add_Links();
 	void del_Links();
-	void forword();
+	void forward();
+	void render();
+	const std::vector<int> * get_nodeIdList();
+	static NodeManager nodeManager;
 
 private:
 	int maxId;
@@ -32,5 +35,6 @@ private:
 	std::vector<std::pair<int, int>> links;
 };
 
-static NodeManager nodeManager;
+extern NodeManager nodeManager;
+
 } //namespace NodeEditor
