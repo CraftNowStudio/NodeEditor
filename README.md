@@ -16,7 +16,7 @@ NodeEditor是一个C++开发的一款多功能自动化流程软件，旨在帮�
 ## 开始
 
 ```shell
-git clone --recursive https://github.com/opacity-black/NodeEditor.git
+git clone --recursive https://github.com/CraftNowStudio/NodeEditor.git
 cd NodeEditor
 git submodule update --init --recursive
 
