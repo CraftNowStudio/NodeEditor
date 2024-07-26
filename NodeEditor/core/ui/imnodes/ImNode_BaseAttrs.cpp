@@ -1,17 +1,13 @@
 #include "core/nepch.h"
-
-#include <any>
-
 #include "ImNode_BaseAttrs.h"
-#include "ImNode_Base.h"
 
 namespace NodeEditor {
     
 std::unordered_map<int, Attr *> Attr::inAttrMap;
 std::unordered_map<int, Attr *> Attr::outAttrMap;
 
-Attr::Attr(AttrType attrType, VarType varType, std::any & value) :
-        attrType(attrType), varType(varType)
+Attr::Attr(AttrType attrType, VarType varType, std::any & value, Node * node) :
+        attrType(attrType), varType(varType), fartherNode(node)
 {
     this->value = new std::any(value);
     this->init_value = new std::any(value);
@@ -23,23 +19,24 @@ Attr::Attr(AttrType attrType, VarType varType, std::any & value) :
         id = nodeManager.get_NextOutputAttrId();
         outAttrMap.insert(std::make_pair(id, this));
     }
+    this->changeFlag = true;
 };
+
+bool Attr::is_change(){
+    bool f=changeFlag;
+    changeFlag = false;
+    return f;
+}
+
+Node * Attr::get_fartherNode(){
+    return fartherNode;
+}
 
 Attr::~Attr() 
 {
     if (attrType == INPUT_ATTR) {
-        // for (auto it = inAttrList.begin(); it < inAttrList.end(); it++) {
-        //     if (this == *it) {
-        //         inAttrList.erase(it);
-        //     }
-        // }
         inAttrMap.erase(id);
     } else {
-        // for (auto it = outAttrList.begin(); it < outAttrList.end(); it++) {
-        //     if (this == *it) {
-        //         outAttrList.erase(it);
-        //     }
-        // }
         outAttrMap.erase(id);
     }
     delete value;
@@ -57,6 +54,7 @@ bool Attr::set(const std::any &v, VarType varType)
     if(varType!=this->varType){
         return false;
     }else{
+        changeFlag = true;
         *(this->value) = v;
         return true;
     }
@@ -104,8 +102,8 @@ Attr * Attr::getById(int id)
 // }
 
 
-InAttr::InAttr(std::any & value, const char *name, VarType varType) :
-			Attr(INPUT_ATTR, varType, value), name(name)
+InAttr::InAttr(std::any & value, const char *name, VarType varType, Node * node) :
+			Attr(INPUT_ATTR, varType, value, node), name(name)
 {
 }
 InAttr::~InAttr(){}
@@ -138,8 +136,8 @@ bool InAttr::link(Attr * oa, bool force)
 
 
 
-OutAttr::OutAttr(std::any & value, const char *name, VarType varType) :
-			Attr(OUTPUT_ATTR, varType, value),name(name) 
+OutAttr::OutAttr(std::any & value, const char *name, VarType varType, Node * node) :
+			Attr(OUTPUT_ATTR, varType, value, node), name(name) 
 {
 }
 OutAttr::~OutAttr(){}

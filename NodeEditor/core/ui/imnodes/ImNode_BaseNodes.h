@@ -1,39 +1,17 @@
 #pragma once
+#include "imNode_Base.h"
 #include "imNode_BaseAttrs.h"
 #include <string>
 #include <vector>
 
 namespace NodeEditor {
-
-class Node {
-public:
-	Node(const char *title);
-	~Node();
-	int get_id();
-	void render();
-	virtual void forward() = 0;
-	static std::unordered_map<int, Node *> rootNodeMap;
-	static std::unordered_map<int, Node *> allNodeMap;
-
-protected:
-	int id;
-	const char *title;
-
-	std::vector<InAttr *> inputAttrList;
-	std::vector<OutAttr *> outputAttrList;
-	void push_inputAttr(InAttr *inAttr);
-	void push_outputAttr(OutAttr *outAttr);
-	void pop_inputAttr();
-	void pop_outputAttr();
-};
-
-
+// 放置自定义的节点
 class OutNode : public Node {
 public:
 	OutAttr *outAttr;
 	OutNode(std::any &value, VarType varType);
 	~OutNode();
-	void forward();
+	void self_forward();
 private:
 };
 
@@ -45,7 +23,7 @@ public:
 	OutAttr *out1;
 	AddNode(std::any & value, VarType varType);
 	~AddNode();
-	void forward();
+	void self_forward();
 };
 
 
@@ -57,7 +35,7 @@ public:
 	OutAttr *out1;
 	MulNode(std::any & value, VarType varType);
 	~MulNode() ;
-	void forward() ;
+	void self_forward() ;
 private:
 };
 
