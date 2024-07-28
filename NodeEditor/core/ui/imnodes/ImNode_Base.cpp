@@ -57,13 +57,13 @@ void NodeManager::add_Links() {
 		if (vaild) {
 			links.push_back(std::make_pair(start_attr, end_attr));
 			//TODO: 实现数据指向
-			OutAttr * oa = (OutAttr *)Attr::getById(start_attr);
-			InAttr * ia = (InAttr *)Attr::getById(end_attr);
+			OutAttr *oa = (OutAttr *)Attr::getById(start_attr);
+			InAttr *ia = (InAttr *)Attr::getById(end_attr);
 			oa->pushNext(ia);
 			oa->link();
 			// 检测是否存在环状回路
 			Node *fnode = oa->get_fartherNode();
-			if(! (fnode->detectCircle(fnode->get_id())) ){
+			if (!(fnode->detectCircle(fnode->get_id()))) {
 				Node::rootNodeMap.erase(ia->get_fartherNode()->get_id());
 			}
 		}
@@ -86,22 +86,22 @@ void NodeManager::del_Links() {
 }
 
 void NodeManager::forward() {
-	for(auto [k,v]:Node::allNodeMap){
+	for (auto [k, v] : Node::allNodeMap) {
 		v->init();
 	}
-	for(auto [k,v]:Node::rootNodeMap){
+	for (auto [k, v] : Node::rootNodeMap) {
 		v->forward();
 	}
 }
 
-void NodeManager::render(){
+void NodeManager::render() {
 	// forward之后再调用render
-	for(auto it=nodeIdList.begin(); it<nodeIdList.end(); it++){
+	for (auto it = nodeIdList.begin(); it < nodeIdList.end(); it++) {
 		Node::allNodeMap.find(*it)->second->render();
 	}
 }
 
-const std::vector<int> * NodeManager::get_nodeIdList() {
+const std::vector<int> *NodeManager::get_nodeIdList() {
 	return &nodeIdList;
 }
 

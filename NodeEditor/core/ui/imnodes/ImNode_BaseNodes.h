@@ -12,6 +12,7 @@ public:
 	OutNode(std::any &value, VarType varType);
 	~OutNode();
 	void self_forward();
+
 private:
 };
 
@@ -21,11 +22,10 @@ public:
 	InAttr *in1;
 	InAttr *in2;
 	OutAttr *out1;
-	AddNode(std::any & value, VarType varType);
+	AddNode(std::any &value, VarType varType);
 	~AddNode();
 	void self_forward();
 };
-
 
 template <class valueType = float>
 class MulNode : public Node {
@@ -33,9 +33,10 @@ public:
 	InAttr *in1;
 	InAttr *in2;
 	OutAttr *out1;
-	MulNode(std::any & value, VarType varType);
-	~MulNode() ;
-	void self_forward() ;
+	MulNode(std::any &value, VarType varType);
+	~MulNode();
+	void self_forward();
+
 private:
 };
 
@@ -47,8 +48,8 @@ public:
 	AddNode<int> *n2;
 	MulNode<float> *n3;
 	OutNode *n4;
-	Demo() ;
-	~Demo() ;
+	Demo();
+	~Demo();
 
 	void render();
 };

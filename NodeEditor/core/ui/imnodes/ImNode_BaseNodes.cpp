@@ -2,11 +2,12 @@
 #include "imNode_BaseNodes.h"
 
 namespace NodeEditor {
-	
+
 std::unordered_map<int, Node *> Node::rootNodeMap;
 std::unordered_map<int, Node *> Node::allNodeMap;
 
-Node::Node(const char *title) : title(title){
+Node::Node(const char *title) :
+		title(title) {
 	id = nodeManager.get_NextNodeId();
 	allNodeMap.insert(std::make_pair(id, this));
 	rootNodeMap.insert(std::make_pair(id, this));
@@ -14,36 +15,37 @@ Node::Node(const char *title) : title(title){
 	runtimes = 0;
 }
 
-Node::~Node(){
+Node::~Node() {
 	allNodeMap.erase(allNodeMap.find(id));
 }
 
-int Node::get_id() { 
-	return id; 
+int Node::get_id() {
+	return id;
 };
 
-bool Node::detectCircle(int id){
+bool Node::detectCircle(int id) {
 	//检测有无环状回路
-	if(this->id==id)return true;
-	else{
-		for(auto [k,v]:sonNodeMap){
+	if (this->id == id)
+		return true;
+	else {
+		for (auto [k, v] : sonNodeMap) {
 			return v->detectCircle(id);
 		}
 		return false;
 	}
 }
 
-void Node::forward(){
-	if(runtimes<max_runtimes){
+void Node::forward() {
+	if (runtimes < max_runtimes) {
 		runtimes++;
 		self_forward();
-		for(auto [k,v]:sonNodeMap){
+		for (auto [k, v] : sonNodeMap) {
 			v->forward();
 		}
 	}
 }
 
-void Node::init(){
+void Node::init() {
 	runtimes = 0;
 }
 
@@ -66,7 +68,7 @@ void Node::render() {
 	ImNodes::EndNode();
 };
 
-void Node::push_sonNode(Node * node){
+void Node::push_sonNode(Node *node) {
 	sonNodeMap.insert(std::make_pair(node->id, node));
 }
 
@@ -75,23 +77,17 @@ void Node::push_outputAttr(OutAttr *outAttr) { outputAttrList.push_back(outAttr)
 void Node::pop_inputAttr() { inputAttrList.pop_back(); };
 void Node::pop_outputAttr() { outputAttrList.pop_back(); };
 
-
-
-OutNode::OutNode(std::any &value, VarType varType) : Node("output") 
-{
+OutNode::OutNode(std::any &value, VarType varType) :
+		Node("output") {
 	outAttr = new OutAttr(value, "output", varType, this);
 	push_outputAttr(outAttr);
 };
 OutNode::~OutNode() { delete outAttr; };
 void OutNode::self_forward(){};
 
-
-
-
-
 template <class valueType>
-AddNode<valueType>::AddNode(std::any & value, VarType varType) : Node("add") 
-{
+AddNode<valueType>::AddNode(std::any &value, VarType varType) :
+		Node("add") {
 	in1 = new InAttr(value, "a ", varType, this);
 	in2 = new InAttr(value, "b ", varType, this);
 	out1 = new OutAttr(value, "c ", varType, this);
@@ -119,9 +115,9 @@ void AddNode<valueType>::self_forward() {
 	}
 };
 
-
 template <class valueType>
-MulNode<valueType>::MulNode(std::any & value, VarType varType) : Node("multiply") {
+MulNode<valueType>::MulNode(std::any &value, VarType varType) :
+		Node("multiply") {
 	in1 = new InAttr(value, "a ", varType, this);
 	in2 = new InAttr(value, "b ", varType, this);
 	out1 = new OutAttr(value, "c ", varType, this);
@@ -148,8 +144,6 @@ void MulNode<valueType>::self_forward() {
 		(*it)->set((std::any)res, (*it)->getType());
 	}
 };
-
-
 
 Demo::Demo() {
 	n0 = new OutNode(std::any(0.f), NE_FLOAT);
