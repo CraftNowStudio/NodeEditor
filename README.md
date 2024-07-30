@@ -21,3 +21,7 @@ cd NodeEditor
 git submodule update --init --recursive
 
 ```
+
+## 配置
+
+确保系统中已经配置了环境变量 `VULKAN_SDK` 和 `PYTHON` 

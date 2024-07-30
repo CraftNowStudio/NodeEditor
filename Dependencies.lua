@@ -1,6 +1,8 @@
 
 VULKAN_SDK = os.getenv("VULKAN_SDK")
 
+PYTHON_SDK =  os.getenv("PYTHON_HOME")
+
 IncludeDir = {}
 IncludeDir["glfw"] = "%{wks.location}/thirdparty/glfw/include"
 IncludeDir["Glad"] = "%{wks.location}/thirdparty/Glad/include"
@@ -15,13 +17,23 @@ IncludeDir["SDL2"] = "%{wks.location}/thirdparty/SDL2/include"
 IncludeDir["shaderc"] = "%{VULKAN_SDK}/Include/shaderc/include"
 IncludeDir["SPIRV_Cross"] = "%{VULKAN_SDK}/Include/spirv_cross"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
+IncludeDir["Python"] = "%{PYTHON_SDK}/include"
+
 
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
 LibraryDir["SDL2Dir"] = "%{wks.location}/thirdparty/SDL2/lib"
+LibraryDir["Python"] = "%{PYTHON_SDK}/libs"
+
 
 Library = {}
+
+Library["python3_d"] = "%{LibraryDir.Python}/python3_d.lib"
+Library["python311_d"] = "%{LibraryDir.Python}/python311_d.lib"
+
+Library["python3"] = "%{LibraryDir.Python}/python3.lib"
+Library["python311"] = "%{LibraryDir.Python}/python311.lib"
 
 Library["SDL2"] = "%{LibraryDir.SDL2Dir}/x64/SDL2.lib"
 Library["SDL2main"] = "%{LibraryDir.SDL2Dir}/x64/SDL2main.lib"

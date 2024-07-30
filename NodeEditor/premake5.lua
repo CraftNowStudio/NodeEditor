@@ -41,6 +41,8 @@ project "NodeEditor"
 		"%{IncludeDir.SDL2}",
 
 		"%{IncludeDir.VulkanSDK}",
+
+		"%{IncludeDir.Python}",
 	}
 
 	links
@@ -53,6 +55,7 @@ project "NodeEditor"
 		"%{Library.SDL2main}",
 		
 		"%{Library.Vulkan}",
+		
 		"opengl32.lib",
 	}
 
@@ -94,7 +97,10 @@ project "NodeEditor"
 		{
 			"%{Library.ShaderC_Debug}",
 			"%{Library.SPIRV_Cross_Debug}",
-			"%{Library.SPIRV_Cross_GLSL_Debug}"
+			"%{Library.SPIRV_Cross_GLSL_Debug}",
+
+			"%{Library.python3_d}",
+			"%{Library.python311_d}",
 		}
 
 	filter "configurations:Release"
@@ -106,5 +112,8 @@ project "NodeEditor"
 		{
 			"%{Library.ShaderC_Release}",
 			"%{Library.SPIRV_Cross_Release}",
-			"%{Library.SPIRV_Cross_GLSL_Release}"
+			"%{Library.SPIRV_Cross_GLSL_Release}",
+
+			"%{Library.python3}",
+			"%{Library.python311}",
 		}

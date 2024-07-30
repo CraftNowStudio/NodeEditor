@@ -1,4 +1,4 @@
-#include "core/nepch.h"
+﻿#include "core/nepch.h"
 #include "ImNode_BaseAttrs.h"
 
 namespace NodeEditor {
