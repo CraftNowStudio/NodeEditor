@@ -2,6 +2,8 @@
 VULKAN_SDK = os.getenv("VULKAN_SDK")
 
 PYTHON_SDK =  os.getenv("PYTHON_HOME")
+PYTHON_VERSION = "39"
+print("python system path: ",PYTHON_SDK)
 
 IncludeDir = {}
 IncludeDir["glfw"] = "%{wks.location}/thirdparty/glfw/include"
@@ -30,10 +32,10 @@ LibraryDir["Python"] = "%{PYTHON_SDK}/libs"
 Library = {}
 
 Library["python3_d"] = "%{LibraryDir.Python}/python3_d.lib"
-Library["python311_d"] = "%{LibraryDir.Python}/python311_d.lib"
+Library["python3x_d"] = "%{LibraryDir.Python}/python%{PYTHON_VERSION}_d.lib"
 
 Library["python3"] = "%{LibraryDir.Python}/python3.lib"
-Library["python311"] = "%{LibraryDir.Python}/python311.lib"
+Library["python3x"] = "%{LibraryDir.Python}/python%{PYTHON_VERSION}.lib"
 
 Library["SDL2"] = "%{LibraryDir.SDL2Dir}/x64/SDL2.lib"
 Library["SDL2main"] = "%{LibraryDir.SDL2Dir}/x64/SDL2main.lib"

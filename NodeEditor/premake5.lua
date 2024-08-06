@@ -63,6 +63,7 @@ project "NodeEditor"
 	{
 		"_CRT_SECURE_NO_WARNINGS",
 		"GLFW_INCLUDE_NONE",
+		"PYTHON_HOME=\"%{PYTHON_SDK}\"",
 	}
 
 	filter "files:../thirdparty/imnodes/**.cpp"
@@ -100,7 +101,7 @@ project "NodeEditor"
 			"%{Library.SPIRV_Cross_GLSL_Debug}",
 
 			"%{Library.python3_d}",
-			"%{Library.python311_d}",
+			"%{Library.python3x_d}",
 		}
 
 	filter "configurations:Release"
@@ -115,5 +116,5 @@ project "NodeEditor"
 			"%{Library.SPIRV_Cross_GLSL_Release}",
 
 			"%{Library.python3}",
-			"%{Library.python311}",
+			"%{Library.python3x}",
 		}

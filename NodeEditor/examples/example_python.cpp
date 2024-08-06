@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <atlconv.h>
+
 
 
 void finalizePython() {
@@ -51,7 +53,9 @@ std::string executePythonScriptfromFile(const std::string &script, const std::ma
 }
 
 int main(int argc, char **argv) {
-	//Py_SetPythonHome((wchar_t *)("C:\Software\Python\Python311"));
+	//Py_SetPythonHome((wchar_t *)("D:\Programs\anaconda3\envs\pytorch"));
+	USES_CONVERSION;
+	Py_SetPythonHome((wchar_t *)A2W(PYTHON_HOME));
 	
 	Py_Initialize();
 	if (!Py_IsInitialized()) {
